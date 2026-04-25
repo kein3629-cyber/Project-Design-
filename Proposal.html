@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>CTU Main Campus Queuing System</title>
+
+        <link rel="stylesheet" href="./styles.css">
+
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+        
+        </head>
+
+        <body>
+
+            <div class="loader-wrapper" id="loader">
+  <div class="loader">
+    <div class="ring"></div>
+    <div class="logo">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/7/74/Cebu_Technological_University_Logo.png?_=20200210031001" alt="logo">
+    </div>
+  </div>
+</div>
+         <div id="content">
+            <header>
+                <h1>CTU Main Campus Queuing System</h1>
+                
+            </header>
+            <nav class="adjust">
+                <a href="#" onclick="showPage('home')">Home</a>
+                <a href="#" onclick="showPage('queue')">Get Queue Number</a>
+                <a href="#" onclick="showPage('help')">Help</a>
+                <a href="#" id="adminTab" style="display:none;" onclick="showPage('adminPanel')">Admin Panel</a>
+                <a href="#" onclick="showPage('login')">Login</a>
+            </nav>
+            <div class="container">
+                <div id="home" class="card" style="display:none;">
+                    <h2>Welcome Students</h2>
+                    <p>Register to get a queue number for the registrar.</p>
+                    <button class="cardBtn" onclick="showPage('queue')">Get Queue Number</button>
+                    <div class="board">Now Serving: <span id="serving">0</span></div>
+                </div>
+                <div id="queue" class="card" style="display:none">
+                    <h2>Queue Registration</h2>
+                    <form id="queueForm">
+                        <input type="text" id="name" placeholder="Student Name" required>
+                        <input type="text" placeholder="Student ID" required>
+                        <select>
+                            <option>Enrollment</option>
+                            <option>Document Request</option>
+                            <option>ID Concern</option>
+                            <option>Subject Adjustment</option>
+                        </select>
+                        <button type="submit" class="cardBtn">Get Queue Number</button>
+                    </form>
+                    <div id="result"></div>
+                </div>
+                <div id="help" class="card" style="display:none">
+                    <h2>Help & Instructions</h2>
+                    <ul>
+                        <li>Fill in your name and student ID, then select the service you need (Enrollment, Document Request, etc.).</li>
+                        <li>Click "Get Queue Number" to receive your number.</li>
+                        <li>Wait for the popup notification when your number is called.</li>
+                        <li>When your number appears, please proceed to the registrar window immediately.</li>
+                        <li>The "Now Serving" number only increases when there are students waiting in the queue.</li>
+                        <li>Popups and sound alerts ensure you know when it is your turn.</li>
+                        <li>This system is designed to simplify queuing and reduce waiting confusion.</li>
+                    </ul>
+                </div>
+                <div id="adminPanel" class="card" style="display:none;">
+                    <h2>Admin Panel</h2>
+                    <p>Manage the Queue:</p>
+                    <button class="cardBtn" onclick="callNext()">Call Next Student</button>
+                    <button class="cardBtn" onclick="resetQueue()">Reset Queue</button>
+                    <h3>Queue List:</h3>
+                    <ul id="queueListDisplay" style="text-align:left;max-height:200px;overflow-y:auto;"></ul>
+                </div>
+                <div class="popup" id="popup">
+                    <div class="popup-box">
+                        <h2>Your Turn!</h2>
+                        <h1 id="popupNumber"></h1>
+                        <p>Please proceed to the Registrar Window.</p>
+                        <button onclick="closePopup()">OK</button>
+                    </div>
+                </div>
+                <div class="popup" id="forgotPopup">
+                    <div class="popup-box">
+                        <h2>Forgot Admin Password</h2>
+                        <div id="qnaStep">
+                            <p>Answer your security question:</p>
+                            <p><b>What is your favorite subject?</b></p>
+                            <input type="text" id="qnaAnswer" placeholder="Your Answer" style="padding:8px;width:80%;border-radius:6px;border:1px solid #ccc;margin:10px 0;">
+                            <button class="cardBtn" onclick="checkQnA()">Submit</button>
+                            <button class="cardBtn" onclick="closeForgotPopup()" style="background:#ccc;color:#003366;margin-top:10px;">Cancel</button>
+                        </div>
+                        <div id="resetStep" style="display:none;">
+                            <p>Enter new password:</p>
+                            <input type="password" id="newPass" placeholder="New Password" style="padding:8px;width:80%;border-radius:6px;border:1px solid #ccc;margin:10px 0;">
+                            <button class="cardBtn" onclick="resetPassword()">Reset Password</button>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div id="login" class="card" style="display:none;">
+    <h2>Admin Login</h2>
+
+    <input type="text" id="adminUser" placeholder="Username">
+    <input type="password" id="adminPass" placeholder="Password">
+
+    <button class="cardBtn" onclick="adminLogin()">Login</button>
+
+    <a onclick="forgotPassword()" style="display:block;margin-top:10px;color:#0288d1;cursor:pointer;">
+        Forgot Password?
+    </a>
+
+    <div id="adminMsg" style="margin-top:10px;font-size:12px;"></div>
+</div>
+                <audio id="beepSound" preload="loop">
+    <source src="https://www.myinstants.com/media/sounds/ive-got-this-faaaaaaaaahhhhh.mp3" type="audio/mpeg">
+</audio>
+</div>
+                
+                <script src="./script.js"></script> 
+           <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"e3c1c9af36de41759418005494a48906","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

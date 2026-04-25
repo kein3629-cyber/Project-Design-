@@ -1,0 +1,283 @@
+
+:root{
+  --yellow: #f5e911;
+  --red: #e01e10;
+  --black: #300a07;
+  --blue: #182ab5;
+  --skyblue:#818deb;
+}
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: 'Sans-Serif',Courier New;
+        }
+        html, body{
+            height:100%; 
+            overflow-x:hidden; 
+            scroll-behavior:smooth; 
+            background:#485e73;
+            background-image: url("https://www.ctu.edu.ph/wp-content/uploads/2019/02/admin-MAIN.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    box-shadow: inset 0 0 10000px rgba(169, 169, 169, 1);
+        }
+        .loader-wrapper{
+  position: fixed;
+  inset: 0;
+  background: #0f0f0f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+
+.loader .ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 6px solid rgba(255,255,255,0.1);
+  border-top: 6px solid #f5e911;
+  animation: spin 1s linear infinite;
+}
+
+
+.loader .logo {
+  position: absolute;
+  inset: 0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.loader .logo img{
+  width:299px;
+  height:299px;
+  border-radius:50%;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+
+
+        header{
+            background: linear-gradient(to top, var(--black), var(--blue));
+            color:white;
+            padding:25px;
+            position:relative;
+            display:none;
+            box-shadow:0 4px 8px rgba(0,0,0,0.2);
+          
+        }
+        header h1{
+            font-size:5vw;
+            text-align: center;
+            background: linear-gradient(to top, #faf8f7, #807b2d);
+            -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+        }
+        nav{
+            background:linear-gradient(to top, var(--blue), var(--skyblue));
+            padding:10px;
+            display:none;
+            box-shadow:0 2px 5px rgba(0,0,0,0.15);
+            margin: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        nav a{
+            margin:5px;
+            text-decoration:none;
+            font-weight:bold;
+            color:#9ca3d6;
+            transition: transform 0.3s ease;
+            display: inline-block;
+            padding-inline-start:5px ;
+            padding-inline-end: 5px;
+            
+            
+        }
+        nav a:hover{
+            color:#fff;
+            transform: scale(1.1);
+            
+        }
+        .adjust{
+          font-size: 2.5vw;
+        }
+        #adminLoginTop{
+           -- position:absolute;
+            top:15px;
+            right:15px;
+            font-size:12px;
+            text-align:right; 
+            
+        }
+        #adminLoginTop input{
+            width:80px;
+            padding:4px;
+            margin:2px;
+            border-radius:4px;
+            border:1px solid #ccc;
+            font-size:12px;
+        }
+        #adminLoginTop button{
+            padding:4px 6px;
+            border:none;
+            border-radius:4px;
+            background:#0288d1;
+            color:white;
+            font-size:12px;
+            cursor:pointer;
+        }
+        #adminLoginTop button:hover{
+            background:#0277bd;
+        }
+        #adminLoginTop a{
+            font-size:10px; 
+            display:block; 
+            margin-top:2px; 
+            color:white; 
+            text-decoration:underline; 
+            cursor:pointer;
+        }
+        .container{
+            display:flex;
+            justify-content:center;
+            padding:40px;
+            flex-wrap:wrap;
+        }
+        .card{
+            background:white;
+            padding:30px;
+            border-radius:15px;
+            width:420px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.15);
+            margin:10px;
+            transition:.3s;
+        }
+        .card:hover{
+            box-shadow:0 15px 30px rgba(0,0,0,0.25);
+        }
+        input,select{
+            width:100%;
+            padding:10px;
+            margin:8px 0;
+            border-radius:8px;
+            border:1px solid #ccc;
+        }
+        button.cardBtn{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:25px;
+            background:linear-gradient(135deg,#0288d1,#03a9f4);
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+            margin-top:10px;
+            transition:.3s;
+            box-shadow:0 5px 15px rgba(0,0,0,0.2);
+        }
+        button.cardBtn:hover{
+            background:linear-gradient(135deg,#0277bd,#0288d1);
+            transform:translateY(-2px);
+        }
+        .board{
+            margin-top:20px;
+            font-size:22px;
+            font-weight:bold;
+            color:#0288d1;
+        }
+        .queue-item{
+            padding:5px;
+            border-bottom:1px solid #ccc;
+            text-align:left;
+        }
+        .popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:10;
+
+    
+    animation: fadeIn 0.25s ease;
+    backdrop-filter: blur(6px);
+}
+
+
+.popup-box{
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 15px 40px rgba(0,0,0,0.35);
+
+    color: white;
+
+    transform: scale(0.8);
+    animation: popUp 0.3s ease forwards;
+}
+
+
+.popup-box h1{
+    font-size:60px;
+    color:#f5e911;
+    text-shadow:0 0 10px rgba(245,233,17,0.6);
+}
+
+
+.popup-box button{
+    margin-top:15px;
+    padding:10px 25px;
+    border:none;
+    border-radius:30px;
+    background: linear-gradient(135deg,#0288d1,#03a9f4);
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.popup-box button:hover{
+    transform: scale(1.05);
+    background: linear-gradient(135deg,#0277bd,#0288d1);
+}
+
+
+@keyframes popUp{
+    to{
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+        audio{
+    position:absolute;
+    left:-9999px;
+}
